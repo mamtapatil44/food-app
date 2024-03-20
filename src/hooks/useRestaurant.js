@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { RES_API } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { restroList } from "../utils/restroSlice";
 
 const useRestaurant = () => {
-  const [allRestraurants, setAllRestraunts] = useState([]);
-  const [filteredRestro, setFilteredRestro] = useState([]);
-
+  let dispatch = useDispatch();
+ 
   useEffect(() => {
     getRestroList();
-  }, []);
+  },[]);
 
   const getRestroList = async () => {
     const data = await fetch(RES_API);
@@ -24,11 +25,11 @@ const useRestaurant = () => {
       }
     };
     const restro = checkJSONData(json);
-    setAllRestraunts(restro);
+
+    dispatch(restroList({"allRestraurants":restro,"filteredRestro":restro}))
+
  
   };
-
-  return allRestraurants;
 };
 
 export default useRestaurant;

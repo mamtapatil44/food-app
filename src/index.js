@@ -9,6 +9,7 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Footer } from "./components/Footer";
 import About from "./pages/About";
 import Cart from "./pages/Cart";
+import RestaurantMenu from "./components/RestaurantMenu";
 
 const AppLayout = () => {
   return (
@@ -32,6 +33,10 @@ children:[
   {
     path:'/cart',
     element:<Cart/>
+  },
+  {
+    path:'/restaurant/:id',
+    element:<RestaurantMenu/>
   }
 
 ]
