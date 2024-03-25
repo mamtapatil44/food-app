@@ -3,11 +3,13 @@ import useRestroMenu from "../hooks/useRestroMenu";
 import { useParams } from "react-router-dom";
 import { CDN_URL } from "../utils/constants";
 import { FaStar } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { addItem } from "../utils/cartSlice";
 
 const RestaurantMenu = () => {
   const { id } = useParams();
-  console.log("id ", id);
   const menuInfo = useRestroMenu(id);
+  const dispatch = useDispatch();
   if (menuInfo === null) return null;
   let data = menuInfo?.cards[0]?.card?.card?.info;
 
@@ -30,6 +32,11 @@ const RestaurantMenu = () => {
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
     );
 
+
+    const handleAddToCart =(item)=>{
+      item.card.info.cloudinaryImageId = cloudinaryImageId;
+      dispatch(addItem(item))
+    }
   return (
     <>
       <div className="flex h-56 bg-gray-900 text-white items-center">
@@ -56,7 +63,7 @@ const RestaurantMenu = () => {
         <div className="mx-auto w-3/4 justify-between">
           <h3>Recommended</h3>
           {itemCards.map((item) => (
-            <div className="h-auto m-8 " key={item?.card?.info?.id}>
+            <div className="h-auto m-12 p-4 shadow-lg" key={item?.card?.info?.id}>
               <div className="flex">
                 <span className="mr-4 pr-4 w-3/4">
                   <h3 className="font-bold">{item?.card?.info?.name}</h3>
@@ -76,7 +83,8 @@ const RestaurantMenu = () => {
                   alt="menu-logo"
                 />}
                   
-                  <span className="absolute  flex  justify-center -pb-2"><button className="text-yellow-500 shadow-lg bg-white mx-2  my-4 px-2 rounded-lg absolute z-1 left-2 py-2">
+                  <span className="absolute  flex  justify-center -pb-2"><button className="text-yellow-500 shadow-lg bg-white mx-2  my-4 px-2 rounded-lg absolute z-1 left-2 py-2"
+                  onClick={()=>handleAddToCart(item)}>
                     Add
                   </button></span>
                 </span>

@@ -23,20 +23,25 @@ const Home = () => {
     dispatch(restroList({allRestraurants:allRestraurants,filteredRestro:filteredData}))
 
   }
+  
+
+   
   return (
-    <>
+    <div className='h-[100vh] overflow-y-auto'>
     <div className='flex'>
       <div className='mx-auto p-4'>
-        <input className='w-96 p-1' placeholder='Search Restro.... ' value={searchText} onChange={(e)=>setSearchText(e.target.value)}/>
+        <input className='w-96 p-1 border border-gray-400 rounded-lg' placeholder='Search Restro.... ' value={searchText} onChange={(e)=>setSearchText(e.target.value)}/>
         <button className='bg-yellow-500 text-white rounded-lg m-2 p-1' onClick={handleFilteredList}>Search</button>
       </div>
-    </div>
+    </div> 
+   
     <div className='flex flex-wrap items-center justify-center'>
-      {filteredRestro?.map((restraurant)=>(
+      { filteredRestro?.length !== 0 ? (filteredRestro?.map((restraurant)=>(
       <Link key={restraurant?.info?.id}   to={"/restaurant/" + restraurant?.info?.id}>  <RestaurantCard  resData={restraurant?.info}/></Link>
-    ))}
+    ))) : (<p className='m-2 p-2'> Searched Restro not present.....</p>)}
       </div>
-    </>
+
+    </div>
   )
 }
 

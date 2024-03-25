@@ -13,7 +13,7 @@ function App() {
     <Provider store={appStore}>
       <div className="">
         <Header/>
-        <div className='h-[100vh] overflow-y-auto'>
+        <div className='h-[80vh] overflow-y-auto'>
         <Outlet/>
         </div>
       

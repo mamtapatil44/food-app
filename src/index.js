@@ -3,23 +3,14 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { Header } from "./components/Header";
 import Home from "./pages/Home";
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-import { Footer } from "./components/Footer";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import About from "./pages/About";
 import Cart from "./pages/Cart";
 import RestaurantMenu from "./components/RestaurantMenu";
+import Contact from "./components/Contact";
 
-const AppLayout = () => {
-  return (
-    <div>
-      <Header />
-      <Outlet />
-      <Footer />
-    </div>
-  );
-};
+
 const routes = createBrowserRouter([{ path: "/", element: <App /> ,
 children:[
   {
@@ -33,6 +24,10 @@ children:[
   {
     path:'/cart',
     element:<Cart/>
+  },
+  {
+    path:'/contact',
+    element:<Contact/>
   },
   {
     path:'/restaurant/:id',
