@@ -1,12 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import emailjs from '@emailjs/browser';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Contact = () => {
   let email = useRef(null);
   let name = useRef(null);
   const form = useRef();
   let message = useRef(null);
- 
+
+
+
   useEffect(() => emailjs.init("ZrZSmiQ9CBQjW12aZ"), []);
   const sendEmail = (e) => {
     e.preventDefault();
@@ -17,7 +21,8 @@ const Contact = () => {
  })
  .then(
    () => {
-       toast.success("Your email has been sent successfully!");
+      toast("Your email has been sent successfully!", toast.POSITION.TOP_CENTER);
+  
    },
    (error) => {
      toast.error('Sorry, there was an error sending your email. Please try again later.',{
@@ -25,9 +30,7 @@ const Contact = () => {
        });
    },
  );
- email =null;
- name =null ;
- message =null
+ e.target.reset()
   };
 
   return (

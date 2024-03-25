@@ -6,6 +6,7 @@ import { Footer } from './components/Footer';
 import { Provider } from 'react-redux';
 import appStore from './utils/appStore';
 import useRestaurant from './hooks/useRestaurant';
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   
