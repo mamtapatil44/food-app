@@ -12,7 +12,14 @@ const useCalculatedAmout = () => {
  
  function getAmount() {
     const totalPrice = cartItems.reduce((accumulator ,item) => {
-        return accumulator += item.card?.info.price/100;
+      if(item.card?.info?.price){
+         accumulator += item.card?.info?.price/100;
+      }
+      else{
+         accumulator += item.card?.info?.defaultPrice/100;
+      }
+      return accumulator;
+         
       }, 0)
       setAmount(totalPrice)
   }
