@@ -5,10 +5,14 @@ import { Link } from "react-router-dom";
 import useRestaurant from "../hooks/useRestaurant";
 import { useDispatch, useSelector } from "react-redux";
 import { restroList } from "../utils/restroSlice";
-import {auth ,provider} from "../utils/firebase"
-import {  signInWithRedirect } from "firebase/auth";
+import { auth, provider } from "../utils/firebase";
+import { signInWithRedirect } from "firebase/auth";
+import { AiOutlineMenuUnfold } from "react-icons/ai";
+
+import { AiOutlineClose } from "react-icons/ai";
 export const Header = () => {
-  const [isloggedIn ,setLoggedIn] = useState(false);
+  const [isloggedIn, setLoggedIn] = useState(false);
+  const [menuOpen, setMenu] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector((store) => store?.restro);
   const cartItems = useSelector((store) => store?.cart?.items);
@@ -26,35 +30,134 @@ export const Header = () => {
     );
   };
 
-  const handleLogin = () =>{
+  const handleLogin = () => {
+    closeMenu();
     signInWithRedirect(auth, provider);
-    setLoggedIn(true)
-    
-  }
-  return (
-    <div className="flex justify-between shadow-lg sticky top-0 left-0 bg-gray-200">
-      <Link to="/">
-        <img src={KITCHEN_LOGO} className="h-20 w-20 m-2 object-fit" />
-      </Link>
+    setLoggedIn(true);
+  };
 
-      <ul className="flex justify-around">
-        <button
-          className="bg-yellow-500 px-2 py-2 rounded-lg my-10 text-white"
-          onClick={handleTopRatedSearch}
-        >
-          Top Rated Restro
-        </button>
-        <li className="m-5 my-12">
-          <Link to="/">Home</Link>
-        </li>
-        <li className="m-5 my-12">
-          <Link to="/about">About</Link>
-        </li>
-        <li className="m-5 my-12">  <Link to="/contact">Contact Us</Link></li>
-        <li className="m-5 my-12">   <Link to="/cart">Cart <p className="absolute right-20 top-8 bg-yellow-500 text-white text-center rounded-full  h-6 w-6 justify-center">{cartItems.length}</p></Link>
-        </li>
-        <button className="my-5 mx-5" onClick={handleLogin}>{isloggedIn ? "Login" :"Logut"}</button>
-      </ul>
+  const handleChange = () => {
+    setMenu(!menuOpen);
+  };
+  const closeMenu = () =>{
+    setMenu(false);
+  }
+
+  return (
+    <div className="sticky w-full">
+      <div>
+        <div className={`${menuOpen ? "bg-gray-400" : "bg-white "} flex flex-row justify-between p-5 md:px-32 bg-white shadow-lg`}>
+          <div className="flex flex-row items-center cursor-pointer">
+            <Link to="/">
+              <img src={KITCHEN_LOGO} className="h-20 w-20 m-2 object-fit" />
+            </Link>
+          </div>
+
+          <nav className="hidden md:flex flex-row items-center font-md text-md gap-6">
+            <button
+              className="bg-yellow-500  text-white rounded-lg p-1 m-1 text-sm"
+              onClick={handleTopRatedSearch}
+            >
+              Top Rated Restro
+            </button>
+            <Link
+              to="/"
+              className="hover:text-yellow-400 transition-all cursor-pointer"
+            >
+              Home
+            </Link>
+            <Link
+              to="/about"
+              className="hover:text-yellow-400 transition-all cursor-pointer"
+            >
+              About
+            </Link>
+            <Link
+              to="/contact"
+              className="hover:text-yellow-400 transition-all cursor-pointer"
+            >
+              Contact Us
+            </Link>
+          
+            <Link
+              to="/cart"
+              className="hover:text-yellow-400 transition-all cursor-pointer flex flex-row"
+            >
+              Cart
+              <p className="bg-yellow-500 text-white text-center rounded-full  h-6 w-6 justify-center -mt-2">
+                {cartItems.length}
+              </p>
+            </Link>
+          
+            <button className="my-5 mx-5" onClick={handleLogin}>
+              {isloggedIn ? "Login" : "Logut"}
+            </button>
+          </nav>
+
+          <div className="md:hidden flex items-center gap-4 ">
+            <button
+              className="bg-yellow-500  text-white rounded-lg p-1 m-1 text-sm"
+              onClick={handleTopRatedSearch}
+            >
+              Top Rated Restro
+            </button>
+            <Link
+              to="/cart"
+              className="hover:text-yellow-400 transition-all cursor-pointer flex flex-row"
+              onClick={closeMenu}
+            >
+              Cart
+              <p className="bg-yellow-500 text-white text-center rounded-full  h-6 w-6 justify-center -mt-2">
+                {cartItems.length}
+              </p>
+            </Link>
+            {menuOpen ? (
+              <AiOutlineClose
+                size={25}
+                onClick={handleChange}
+                className="bg-yellow-500"
+              />
+            ) : (
+              <AiOutlineMenuUnfold
+                size={25}
+                onClick={handleChange}
+                className="bg-yellow-500"
+              />
+            )}
+          </div>
+
+          <div
+            className={`${
+              menuOpen ? "translate-x-0" : "-translate-x-full"
+            } lg:hidden flex flex-col absolute bg-gray-400 text-white left-0 top-28 font-semibold text-2xl text-center pt-8 pb-4 gap-8 w-full h-fit transition-transform duration-300`}
+          >
+             <Link
+              to="/"
+              className="hover:text-yellow-400 transition-all cursor-pointer"
+              onClick={closeMenu}
+            >
+              Home
+            </Link>
+            <Link
+              to="/about"
+              className="hover:text-yellow-400 transition-all cursor-pointer"
+              onClick={closeMenu}
+            >
+              About
+            </Link>
+            <Link
+              to="/contact"
+              className="hover:text-yellow-400 transition-all cursor-pointer"
+              onClick={closeMenu}
+            >
+              Contact Us
+            </Link>
+            <button className="my-5 mx-5" onClick={handleLogin}>
+              {isloggedIn ? "Login" : "Logut"}
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
