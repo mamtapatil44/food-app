@@ -19,6 +19,7 @@ export const Header = () => {
   const allRestraurants = data.allRestraurants;
 
   const handleTopRatedSearch = () => {
+    closeMenu();
     const filteredData = allRestraurants.filter((item) => {
       return item.info.avgRating > 4;
     });
@@ -39,14 +40,18 @@ export const Header = () => {
   const handleChange = () => {
     setMenu(!menuOpen);
   };
-  const closeMenu = () =>{
+  const closeMenu = () => {
     setMenu(false);
-  }
+  };
 
   return (
     <div className="sticky w-full">
       <div>
-        <div className={`${menuOpen ? "bg-gray-400" : "bg-white "} flex flex-row justify-between p-5 md:px-32 bg-white shadow-lg`}>
+        <div
+          className={`${
+            menuOpen ? "bg-gray-800" : "bg-white "
+          } flex flex-row justify-between p-5 md:px-10  shadow-lg`}
+        >
           <div className="flex flex-row items-center cursor-pointer">
             <Link to="/">
               <img src={KITCHEN_LOGO} className="h-20 w-20 m-2 object-fit" />
@@ -54,12 +59,15 @@ export const Header = () => {
           </div>
 
           <nav className="hidden md:flex flex-row items-center font-md text-md gap-6">
-            <button
-              className="bg-yellow-500  text-white rounded-lg p-1 m-1 text-sm"
-              onClick={handleTopRatedSearch}
-            >
-              Top Rated Restro
-            </button>
+            <Link to="/">
+              <button
+                className="px-2 py-1 border border-yellow-600 rounded hover:text-yellow-500"
+                onClick={handleTopRatedSearch}
+              >
+                Top Rated Restro
+              </button>
+            </Link>
+
             <Link
               to="/"
               className="hover:text-yellow-400 transition-all cursor-pointer"
@@ -78,7 +86,7 @@ export const Header = () => {
             >
               Contact Us
             </Link>
-          
+
             <Link
               to="/cart"
               className="hover:text-yellow-400 transition-all cursor-pointer flex flex-row"
@@ -88,22 +96,31 @@ export const Header = () => {
                 {cartItems.length}
               </p>
             </Link>
-          
-            <button className="my-5 mx-5" onClick={handleLogin}>
-              {isloggedIn ? "Login" : "Logut"}
+
+            <button
+              className="m-5 px-3 py-1 border border-yellow-600 rounded hover:text-yellow-500"
+              onClick={handleLogin}
+            >
+              {isloggedIn ? "Login" : "Logout"}
             </button>
           </nav>
 
           <div className="md:hidden flex items-center gap-4 ">
-            <button
-              className="bg-yellow-500  text-white rounded-lg p-1 m-1 text-sm"
-              onClick={handleTopRatedSearch}
-            >
-              Top Rated Restro
-            </button>
+            <Link to="/">
+              <button
+                className={ `${
+                  menuOpen ? "text-white" : "text-black"
+                } px-2 py-1 border border-yellow-600 rounded  hover:text-yellow-500`}
+                onClick={handleTopRatedSearch}
+              >
+                Top Rated Restro
+              </button>
+            </Link>
             <Link
               to="/cart"
-              className="hover:text-yellow-400 transition-all cursor-pointer flex flex-row"
+              className={`${
+                menuOpen ? "text-white" : "text-black"
+                } hover:text-yellow-400 transition-all cursor-pointer flex flex-row`}
               onClick={closeMenu}
             >
               Cart
@@ -115,13 +132,13 @@ export const Header = () => {
               <AiOutlineClose
                 size={25}
                 onClick={handleChange}
-                className="bg-yellow-500"
+                color="white"
               />
             ) : (
               <AiOutlineMenuUnfold
                 size={25}
                 onClick={handleChange}
-                className="bg-yellow-500"
+               
               />
             )}
           </div>
@@ -129,9 +146,9 @@ export const Header = () => {
           <div
             className={`${
               menuOpen ? "translate-x-0" : "-translate-x-full"
-            } lg:hidden flex flex-col absolute bg-gray-400 text-white left-0 top-28 font-semibold text-2xl text-center pt-8 pb-4 gap-8 w-full h-fit transition-transform duration-300`}
+            } lg:hidden flex flex-col absolute bg-opacity-100 bg-gray-800 text-white left-0 top-28 font-semibold text-xl text-center pt-8 pb-4 gap-8 w-full h-fit transition-transform duration-300 z-auto opacity-100`}
           >
-             <Link
+            <Link
               to="/"
               className="hover:text-yellow-400 transition-all cursor-pointer"
               onClick={closeMenu}
@@ -152,8 +169,8 @@ export const Header = () => {
             >
               Contact Us
             </Link>
-            <button className="my-5 mx-5" onClick={handleLogin}>
-              {isloggedIn ? "Login" : "Logut"}
+            <button  className="m-5 px-3 py-1 border border-yellow-600 rounded hover:text-yellow-500" onClick={handleLogin}>
+              {isloggedIn ? "Login" : "Logout"}
             </button>
           </div>
         </div>

@@ -30,8 +30,8 @@ const Home = () => {
     <div className=''>
     <div className='flex flex-row'>
       <div className='mx-auto p-2 md:p-4 '>
-        <input className='w-72 md:w-96 p-1 border  border-gray-400 rounded-lg ' placeholder='Search Restro.... ' value={searchText} onChange={(e)=>setSearchText(e.target.value)}/>
-        <button className='bg-yellow-500 text-white rounded-lg m-2 p-1' onClick={handleFilteredList}>Search</button>
+        <input className='w-72 md:w-96 p-1 border border-yellow-500 rounded-lg ' placeholder='Search Restro.... ' value={searchText} onChange={(e)=>setSearchText(e.target.value)}/>
+        <button className='border border-yellow-500 rounded-lg m-2 p-1' onClick={handleFilteredList}>Search</button>
       </div>
     </div> 
    

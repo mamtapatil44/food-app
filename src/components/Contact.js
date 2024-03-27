@@ -35,10 +35,10 @@ const Contact = () => {
 
   return (
     <div>
-      <div className=" ">
+      <div className="min-h-full ">
         <form ref={form}
           onSubmit={sendEmail}
-          className=" w-4/12 p-12 bg-black  justify-center mx-auto left-0 right-0 my-36 rounded-lg text-white bg-opacity-80"
+          className=" md:w-4/12 p-12 bg-black  justify-center mx-auto left-0 right-0 my-36 rounded-lg text-white bg-opacity-80"
         >
           <h1 className="text-yellow-500 mb-6 text-center">Contact Us</h1>
           <input

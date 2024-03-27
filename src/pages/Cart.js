@@ -10,16 +10,16 @@ const Cart = () => {
  
   return (
     <div className=''>
-      <div className='mx-auto w-3/5'>
+      <div className='mx-auto md:w-3/5'>
         <div>
         {cartItems.map((cartItem,index)=> <CartList key={index}  resData={cartItem?.card?.info}/>)}
        </div>
-       <div>
+       <div className='w-full justify-center'>
         
-        {totalCartAmout ? ( <span className='flex justify-around'>
-        <h3 className='3/4 mr-4'>Total ammount of your cart </h3>
-        <p className='1/4 mx-8 mr-0'> Rs {totalCartAmout}</p>
-       </span>) :(<span className='relative flex'>
+        {totalCartAmout ? ( <span className='flex justify-between  gap-12 md:gap-40 mx-4'>
+        <h3 className='w-1/2 '>Total amount : </h3>
+        <p className='w-1/2 '> Rs {totalCartAmout}</p>
+       </span>) :(<span className='relative flex items-center justify-center'>
         <img className='m-auto' src={Empty_Cart_Img} alt='Empty Cart'/>
        </span>)}
       
