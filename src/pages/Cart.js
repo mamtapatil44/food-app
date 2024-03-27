@@ -19,7 +19,7 @@ const Cart = () => {
         {totalCartAmout ? ( <span className='flex justify-between  gap-12 md:gap-40 mx-4'>
         <h3 className='w-1/2 '>Total amount : </h3>
         <p className='w-1/2 '> Rs {totalCartAmout}</p>
-       </span>) :(<span className='relative flex items-center justify-center'>
+       </span>) :(<span className=' flex items-center justify-center'>
         <img className='m-auto' src={Empty_Cart_Img} alt='Empty Cart'/>
        </span>)}
       
