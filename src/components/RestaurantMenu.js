@@ -14,7 +14,7 @@ const RestaurantMenu = () => {
   let data = menuInfo?.cards[0]?.card?.card?.info;
   if (!data)
     return (
-      <div className=" min-h-full flex flex-row justify-between items-center lg:px-32 px-5 text-center bg-[url('assets/images/UNAVAILABLE.jpeg')] bg-no-repeat bg-cover bg-center"></div>
+      <div className="  min-h-full flex flex-row justify-between items-center lg:px-32 px-5 text-center bg-[url('assets/images/UNAVAILABLE.jpeg')] bg-no-repeat bg-contain bg-center "></div>
     );
 
   const {
