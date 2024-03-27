@@ -5,7 +5,7 @@ import { deleteItem } from "../utils/cartSlice";
 
 export const CartList = (props) => {
 const dispatch = useDispatch();
-  const { id,name, cloudinaryImageId, price, imageId } = props?.resData;
+  const { id,name, cloudinaryImageId, price,defaultPrice, imageId } = props?.resData;
   const handleRemove =(id)=>{
     dispatch(deleteItem(id))
 
@@ -30,7 +30,7 @@ const dispatch = useDispatch();
       </span>
 
       <span className="flex  items-center w-1/2 justify-around">
-        <p className="m-4 text-xs">Rs {price / 100}</p>
+        <p className="m-4 text-xs">Rs {price ? price / 100 : defaultPrice / 100}</p>
         <button className="m-2 p-2 py-3 rounded-lg text-yellow-900 shadow-lg" onClick={()=>handleRemove(id)}>Remove</button>
       </span>
     </div>

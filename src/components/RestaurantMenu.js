@@ -34,7 +34,10 @@ const RestaurantMenu = () => {
 
 
     const handleAddToCart =(item)=>{
-      item.card.info.cloudinaryImageId = cloudinaryImageId;
+      if(!item?.card?.info?.cloudinaryImageId){
+        item.card.info.cloudinaryImageId  = cloudinaryImageId;
+      }
+     
       dispatch(addItem(item))
     }
   return (
