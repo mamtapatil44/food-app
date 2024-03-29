@@ -4,15 +4,16 @@ import { CartList } from '../components/CartList';
 import useCalculatedAmout from '../hooks/useCalculatedAmout';
 import Empty_Cart_Img from '../assets/images/Empty_Cart_Img.png'
 
+
 const Cart = () => {
-  const cartItems = useSelector(store=>store?.cart?.items);
+ let cartItems = useSelector(store=>store?.cart?.items);
  const totalCartAmout = useCalculatedAmout();
  
   return (
     <div className=''>
       <div className='mx-auto md:w-3/5'>
         <div>
-        {cartItems.map((cartItem,index)=> <CartList key={index}  resData={cartItem?.card?.info}/>)}
+        {cartItems.map((cartItem,index)=> <CartList key={index}  resData={cartItem?.card?.info} cartQuantity={cartItem?.cartQuantity}/>)}
        </div>
        <div className='w-full justify-center'>
         

@@ -9,8 +9,7 @@ const restroSlice = createSlice({
     reducers : {
         restroList : (state,action) => {
          state.allRestraurants =action.payload.allRestraurants;
-          state.filteredRestro = action.payload.filteredRestro;
-          console.log(" state.allRestraurants", state.allRestraurants)
+        state.filteredRestro = action.payload.filteredRestro;
         }
        
 

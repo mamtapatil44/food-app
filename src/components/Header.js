@@ -10,12 +10,14 @@ import { signInWithRedirect } from "firebase/auth";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
 
 import { AiOutlineClose } from "react-icons/ai";
+import useCountCart from "../hooks/useCountCart";
 export const Header = () => {
   const [isloggedIn, setLoggedIn] = useState(false);
   const [menuOpen, setMenu] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector((store) => store?.restro);
   const cartItems = useSelector((store) => store?.cart?.items);
+  const cartItemCount =  useCountCart();
   const allRestraurants = data.allRestraurants;
 
   const handleTopRatedSearch = () => {
@@ -93,7 +95,7 @@ export const Header = () => {
             >
               Cart
               <p className="bg-yellow-500 text-white text-center rounded-full  h-6 w-6 justify-center -mt-2">
-                {cartItems.length}
+                {cartItemCount}
               </p>
             </Link>
 
@@ -125,7 +127,7 @@ export const Header = () => {
             >
               Cart
               <p className="bg-yellow-500 text-white text-center rounded-full  h-6 w-6 justify-center -mt-2">
-                {cartItems.length}
+                {cartItemCount}
               </p>
             </Link>
             {menuOpen ? (

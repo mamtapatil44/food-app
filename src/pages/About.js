@@ -1,5 +1,5 @@
 import React from "react";
-import FOOD from "../assets/images/food.avif";
+
 
 const About = () => {
   return (

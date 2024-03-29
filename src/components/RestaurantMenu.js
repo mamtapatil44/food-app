@@ -3,10 +3,11 @@ import useRestroMenu from "../hooks/useRestroMenu";
 import { useParams } from "react-router-dom";
 import { CDN_URL } from "../utils/constants";
 import { FaStar } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../utils/cartSlice";
 
 const RestaurantMenu = () => {
+  const cartItems = useSelector((store) => store?.cart?.items);
   const { id } = useParams();
   const menuInfo = useRestroMenu(id);
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const RestaurantMenu = () => {
   let data = menuInfo?.cards[0]?.card?.card?.info;
   if (!data)
     return (
-      <div className="  min-h-full flex flex-row justify-between items-center lg:px-32 px-5 text-center bg-[url('assets/images/UNAVAILABLE.jpeg')] bg-no-repeat bg-contain bg-center "></div>
+      <div className="min-h-full flex flex-row justify-between items-center lg:px-32 px-5 text-center bg-[url('assets/images/UNAVAILABLE.jpeg')] bg-no-repeat bg-contain bg-center "></div>
     );
 
   const {
@@ -37,12 +38,13 @@ const RestaurantMenu = () => {
     );
 
   const handleAddToCart = (item) => {
+   
     if (!item?.card?.info?.cloudinaryImageId) {
       item.card.info.cloudinaryImageId = cloudinaryImageId;
     }
-
     dispatch(addItem(item));
   };
+  
   return (
     <>
       <div className="flex h-56 bg-gray-900 text-white items-center">
