@@ -38,7 +38,7 @@ const Home = () => {
     <div className='flex flex-wrap items-center justify-center'>
       { filteredRestro?.length !== 0 ? (filteredRestro?.map((restraurant)=>(
       <Link key={restraurant?.info?.id}   to={"/restaurant/" + restraurant?.info?.id}>  <RestaurantCard  resData={restraurant?.info}/></Link>
-    ))) : (<p className='m-2 p-2'> Searched Restro not present.....</p>)}
+    ))) : (<p className='m-2 p-2'> Searched Restro not found.....</p>)}
       </div>
 
     </div>
