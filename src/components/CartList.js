@@ -13,7 +13,7 @@ const dispatch = useDispatch();
   }
   return (
     <div className="flex w-full justify-between  m-4 p-4 shadow-lg">
-      <span className="flex  items-center w-1/2">
+      <span className="flex  items-center w-1/2 justify-around">
         {imageId ? (
           <img
             className="h-20 w-20 md:h-24 md:w-24 object-cover"
@@ -28,7 +28,8 @@ const dispatch = useDispatch();
           />
         )}
         <h1 className="m-4 text-xs">{name}</h1>
-        <p className="m-3 text-xs">Qty: {cartQuntity}</p>
+        <span > <p className="m-3 text-xs ">Qty: {cartQuntity}</p></span>
+        
       </span>
 
       <span className="flex  items-center w-1/2 justify-around">
