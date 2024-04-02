@@ -10,9 +10,10 @@ const RestaurantMenu = () => {
   const cartItems = useSelector((store) => store?.cart?.items);
   const { id } = useParams();
   const menuInfo = useRestroMenu(id);
+  console.log("menuInfo ",menuInfo)
   const dispatch = useDispatch();
   if (!menuInfo) return null;
-  let data = menuInfo?.cards[0]?.card?.card?.info;
+  let data = menuInfo?.cards[2]?.card?.card?.info;
   if (!data)
     return (
       <div className="min-h-full flex flex-row justify-between items-center lg:px-32 px-5 text-center bg-[url('assets/images/UNAVAILABLE.jpeg')] bg-no-repeat bg-contain bg-center "></div>
@@ -27,7 +28,7 @@ const RestaurantMenu = () => {
     avgRating,
   } = data;
   const { itemCards } =
-    menuInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
+    menuInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
       ?.card;
 
   const categories =
