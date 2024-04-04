@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import appStore from './utils/appStore';
 import useRestaurant from './hooks/useRestaurant';
 import "react-toastify/dist/ReactToastify.css";
-
+import { ToastContainer } from 'react-toastify';
 function App() {
   
   return (
@@ -19,6 +19,18 @@ function App() {
         </div>
       
         <Footer />
+        <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        
+      />
       </div>
     </Provider>
   )

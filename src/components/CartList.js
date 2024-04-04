@@ -4,38 +4,48 @@ import { useDispatch } from "react-redux";
 import { deleteItem } from "../utils/cartSlice";
 
 export const CartList = (props) => {
-const dispatch = useDispatch();
- const cartQuntity = props?.cartQuantity;
-  const { id,name, cloudinaryImageId, price,defaultPrice, imageId } = props?.resData;
-  const handleRemove =(id)=>{
-    dispatch(deleteItem(id))
-
-  }
+  const dispatch = useDispatch();
+  const cartQuntity = props?.cartQuantity;
+  const { id, name, cloudinaryImageId, price, defaultPrice, imageId } =
+    props?.resData;
+  const handleRemove = (id) => {
+    dispatch(deleteItem(id));
+  };
   return (
-    <div className="flex w-full justify-between  m-4 p-4 shadow-lg">
-      <span className="flex  items-center w-1/2 justify-around">
-        {imageId ? (
-          <img
-            className="h-20 w-20 md:h-24 md:w-24 object-cover"
-            src={CDN_URL + imageId}
-            alt="product-logo"
-          />
-        ) : (
-          <img
-            className="h-20 w-20 md:h-24 md:w-24 object-cover"
-            src={CDN_URL + cloudinaryImageId}
-            alt="product-logo"
-          />
-        )}
-        <h1 className="m-4 text-xs">{name}</h1>
-        <span > <p className="m-3 text-xs ">Qty: {cartQuntity}</p></span>
-        
-      </span>
-
-      <span className="flex  items-center w-1/2 justify-around">
-        <p className="m-4 text-xs">Rs {price ? (price / 100) * cartQuntity : (defaultPrice / 100) * cartQuntity}</p>
-        <button className="m-2 p-2 py-3 rounded-lg text-yellow-900 shadow-lg" onClick={()=>handleRemove(id)}>Remove</button>
-      </span>
-    </div>
+    <>
+      <tr className="border-b dark:border-neutral-500">
+        <td className=" px-1 py-4 font-medium">
+          {imageId ? (
+            <img
+              className="h-20 w-20 md:h-24 md:w-24 object-cover"
+              src={CDN_URL + imageId}
+              alt="product-logo"
+            />
+          ) : (
+            <img
+              className="h-20 w-20 md:h-24 md:w-24 object-cover"
+              src={CDN_URL + cloudinaryImageId}
+              alt="product-logo"
+            />
+          )}
+        </td>
+        <td className=" px-1 py-4 font-medium"> {name}</td>
+        <td className=" px-1 py-4 font-medium mx-2"> {cartQuntity}</td>
+        <td className=" px-1 py-4 font-medium">
+          Rs &nbsp;
+          {price
+            ? (price / 100) * cartQuntity
+            : (defaultPrice / 100) * cartQuntity}
+        </td>
+        <td className=" px-1 py-4 font-medium">
+          <button
+            className="p-2  rounded-lg text-yellow-900 shadow-lg"
+            onClick={() => handleRemove(id)}
+          >
+            Remove
+          </button>
+        </td>
+      </tr>
+    </>
   );
 };

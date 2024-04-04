@@ -12,6 +12,7 @@ const Home = () => {
   const data = useSelector(store =>store?.restro);
   const allRestraurants =data.allRestraurants;
   const filteredRestro =data.filteredRestro;
+  console.log("filteredRestro ",filteredRestro)
 
   const dispatch =useDispatch()
   

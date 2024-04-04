@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import emailjs from '@emailjs/browser';
-import { showAlert } from 'tailwind-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-
+import { toast } from "react-toastify";
 const Contact = () => {
   let email = useRef(null);
   let name = useRef(null);
@@ -21,11 +20,15 @@ const Contact = () => {
  })
  .then(
    () => {
-    showAlert('success', "Success", 'Showing success tailwind alert')
+    toast.success("Email sent Successfully", {
+      position: "top-left",
+    });
   
    },
    (error) => {
-    showAlert('error', "Error", 'Showing error tailwind alert')
+    toast.warning("Error !  to send email", {
+      position: "top-left",
+    });
    },
  );
  e.target.reset()

@@ -5,8 +5,9 @@ import { CDN_URL } from "../utils/constants";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../utils/cartSlice";
-
+import { ToastContainer, toast } from 'react-toastify';
 const RestaurantMenu = () => {
+  let constCards;
   const cartItems = useSelector((store) => store?.cart?.items);
   const { id } = useParams();
   const menuInfo = useRestroMenu(id);
@@ -22,21 +23,19 @@ const RestaurantMenu = () => {
   const {
     name,
     cuisines,
-    costForTwoMessage,
     cloudinaryImageId,
     sla,
     avgRating,
   } = data;
-  const { itemCards } =
-    menuInfo?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
-      ?.card;
 
-  const categories =
-    menuInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
-      (c) =>
-        c.card?.["card"]?.["@type"] ===
-        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-    );
+      for (let i = 0; i < menuInfo?.cards?.length; i++) {
+        constCards  =
+        menuInfo.cards[i]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card
+        ?.card;
+      }
+      const { itemCards } = constCards
+
+
 
   const handleAddToCart = (item) => {
    
@@ -51,7 +50,7 @@ const RestaurantMenu = () => {
       <div className="flex h-56 bg-gray-900 text-white items-center">
         <div className=" mx-auto flex">
           <img
-            className="w-48 md:w-56 rounded-lg"
+            className="w-44 rounded-lg"
             src={CDN_URL + cloudinaryImageId}
             alt="hotel-mg"
           />
@@ -71,7 +70,7 @@ const RestaurantMenu = () => {
       <div className="flex items-center">
         {!itemCards ? (
           <h1 className="mx-auto p-4 text-center font-bold">
-            Currently not available{" "}
+            Currently not available
           </h1>
         ) : (
           <div className="mx-auto  justify-between">
