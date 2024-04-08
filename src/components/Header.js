@@ -1,23 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import KITCHEN_LOGO from "../assets/images/MOM_Kitchen_Logo.png";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  getRedirectResult,
+  signOut,
+} from "firebase/auth";
 import { Link } from "react-router-dom";
-import useRestaurant from "../hooks/useRestaurant";
 import { useDispatch, useSelector } from "react-redux";
 import { restroList } from "../utils/restroSlice";
 import { auth, provider } from "../utils/firebase";
 import { signInWithRedirect } from "firebase/auth";
 import { AiOutlineMenuUnfold } from "react-icons/ai";
-
 import { AiOutlineClose } from "react-icons/ai";
 import useCountCart from "../hooks/useCountCart";
+import { toast } from "react-toastify";
+import { FiLogOut } from "react-icons/fi";
+
 export const Header = () => {
-  const [isloggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+  const [logOutPopUp, setLogOutPopUp] = useState(false);
   const [menuOpen, setMenu] = useState(false);
   const dispatch = useDispatch();
   const data = useSelector((store) => store?.restro);
   const cartItems = useSelector((store) => store?.cart?.items);
-  const cartItemCount =  useCountCart();
+  const cartItemCount = useCountCart();
   const allRestraurants = data.allRestraurants;
 
   const handleTopRatedSearch = () => {
@@ -36,14 +43,54 @@ export const Header = () => {
   const handleLogin = () => {
     closeMenu();
     signInWithRedirect(auth, provider);
-    setLoggedIn(true);
   };
 
+  const handleLogoutPopUp = () => {
+    setLogOutPopUp(true);
+  };
+
+  const closePopUp = () => {
+    setLogOutPopUp(false);
+  };
+  useEffect(() => {
+    const auth = getAuth();
+    getRedirectResult(auth)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access Google APIs.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        setUser(result.user);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  });
   const handleChange = () => {
     setMenu(!menuOpen);
   };
   const closeMenu = () => {
     setMenu(false);
+  };
+
+  const handleLogout = () => {
+    const auth = getAuth();
+    console.log("logout");
+    signOut(auth)
+      .then((result) => {
+        console.log("result logout", result);
+        setUser(null);
+      })
+      .catch((error) => {
+        toast.error("Error in logout");
+      });
+    setUser(null);
+    setMenu(false)
   };
 
   return (
@@ -52,7 +99,7 @@ export const Header = () => {
         <div
           className={`${
             menuOpen ? "bg-gray-800" : "bg-white "
-          } flex flex-row justify-between p-5 md:px-10  shadow-lg`}
+          } flex flex-row justify-between p-5 px-2 md:px-10  shadow-lg`}
         >
           <div className="flex flex-row items-center cursor-pointer">
             <Link to="/">
@@ -98,21 +145,76 @@ export const Header = () => {
                 {cartItemCount}
               </p>
             </Link>
+            {!user ? (
+              <button
+                className="ml-1 px-3 py-1 border border-yellow-600 rounded hover:text-yellow-500 mt-0"
+                onClick={handleLogin}
+              >
+                Login
+              </button>
+            ) : (
+              <div className="relative ">
+                <div className="flex items-center gap-1">
+                  <Link
+                    className="cursor-pointer "
+                    id="menu-button"
+                    onClick={handleLogoutPopUp}
+                  >
+                    {user ? (
+                      <span className="">
+                        <img
+                          src={user?.photoURL}
+                          alt="profile name"
+                          className="h-10 w-10 rounded-full"
+                        />
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </Link>
+                </div>
 
-            <button
-              className="m-5 px-3 py-1 border border-yellow-600 rounded hover:text-yellow-500"
-              onClick={handleLogin}
-            >
-              {isloggedIn ? "Login" : "Logout"}
-            </button>
+                {user && logOutPopUp ? (
+                  <div
+                    className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                    tabindex="-1"
+                  >
+                    <span className="m-2">
+                      <AiOutlineClose
+                        size={20}
+                        onClick={closePopUp}
+                        color="black"
+                        className="float-right m-4"
+                      />
+                    </span>
+                    <span className="flex flex-row gap-2 m-8 items-center justify-center">
+                      <img
+                        src={user?.photoURL}
+                        alt="profile name"
+                        className="h-12 w-12 rounded-full"
+                      />
+                    </span>
+                    <span className="flex flex-row gap-2 m-8 items-center justify-center">
+                      <button>Logout </button>
+                      <FiLogOut onClick={handleLogout} className="cursor-pointer"/>
+                    </span>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+            )}
           </nav>
 
-          <div className="md:hidden flex items-center gap-4 ">
+          <div className="md:hidden flex items-center gap-3 ">
             <Link to="/">
               <button
-                className={ `${
+                className={`${
                   menuOpen ? "text-white" : "text-black"
-                } px-2 py-1 border border-yellow-600 rounded  hover:text-yellow-500`}
+                } px-1 py-1 border border-yellow-600 rounded  hover:text-yellow-500 text-sm`}
                 onClick={handleTopRatedSearch}
               >
                 Top Rated Restro
@@ -122,7 +224,7 @@ export const Header = () => {
               to="/cart"
               className={`${
                 menuOpen ? "text-white" : "text-black"
-                } hover:text-yellow-400 transition-all cursor-pointer flex flex-row`}
+              } hover:text-yellow-400 transition-all cursor-pointer flex flex-row`}
               onClick={closeMenu}
             >
               Cart
@@ -131,17 +233,18 @@ export const Header = () => {
               </p>
             </Link>
             {menuOpen ? (
-              <AiOutlineClose
-                size={25}
-                onClick={handleChange}
-                color="white"
-              />
+              <AiOutlineClose size={25} onClick={handleChange} color="white" />
             ) : (
-              <AiOutlineMenuUnfold
-                size={25}
-                onClick={handleChange}
-               
-              />
+              <div className="flex flex-row">
+              <AiOutlineMenuUnfold size={25} onClick={handleChange} />
+              {user ? (
+              <span className=" h-3 w-3 rounded-full ml-1 mt-1">
+                <img className=" h-3 w-3 rounded-full" src={user?.photoURL} alt="profile name" />
+              </span>
+            ) : (
+              ""
+            )}
+              </div>
             )}
           </div>
 
@@ -171,9 +274,15 @@ export const Header = () => {
             >
               Contact Us
             </Link>
-            <button  className="m-5 px-3 py-1 border border-yellow-600 rounded hover:text-yellow-500" onClick={handleLogin}>
-              {isloggedIn ? "Login" : "Logout"}
-            </button>
+          {!user ? (  <button
+              className="my-1 px-3 py-1 w-1/3 mx-auto border border-yellow-600 rounded hover:text-yellow-500"
+              onClick={handleLogin}
+            >
+           Login
+            </button>) :(<span className="flex flex-row gap-2  items-center justify-center">Logout &nbsp;
+                      <FiLogOut onClick={handleLogout} className="cursor-pointer"/>
+                    </span>)}
+          
           </div>
         </div>
       </div>

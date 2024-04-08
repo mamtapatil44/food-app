@@ -17,13 +17,13 @@ export const CartList = (props) => {
         <td className=" px-1 py-4 font-medium">
           {imageId ? (
             <img
-              className="h-20 w-20 md:h-24 md:w-24 object-cover"
+              className="ml-2 h-16 w-16 md:h-24 md:w-24 object-cover"
               src={CDN_URL + imageId}
               alt="product-logo"
             />
           ) : (
             <img
-              className="h-20 w-20 md:h-24 md:w-24 object-cover"
+              className="ml-2 h-16 w-16 md:h-24 md:w-24 object-cover"
               src={CDN_URL + cloudinaryImageId}
               alt="product-logo"
             />

@@ -8,8 +8,6 @@ const cartSlice = createSlice({
   },
   reducers: {
     addItem: (state, action) => {
-
-
         const existingIndex = state.items.findIndex(
             (item) => item.card.info.id === action.payload.card.info.id
           );
@@ -21,6 +19,7 @@ const cartSlice = createSlice({
             };
             toast.info("Increased product quantity", {
               position: "top-left",
+              autoClose:"200"
             });
           } else {
             let tempProductItem = { ...action.payload, cartQuantity: 1 };

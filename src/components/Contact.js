@@ -36,7 +36,7 @@ const Contact = () => {
 
   return (
     <div>
-      <div className="min-h-full ">
+      <div className="min-h-full mt-[6%]">
         <form ref={form}
           onSubmit={sendEmail}
           className=" md:w-4/12 p-12 bg-black  justify-center mx-auto left-0 right-0 my-36 rounded-lg text-white bg-opacity-80"
