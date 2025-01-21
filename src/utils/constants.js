@@ -1,6 +1,6 @@
 let CORSPROXY = "https://corsproxy.io/?";
 
-export const RES_API = `${CORSPROXY}https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5204303&lng=73.8567437&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`;
+export const RES_API = `${CORSPROXY}https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5204303&lng=73.8567437`;
 
 export const IMG_CAROUSEL = "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_850,h_504/";
 
